@@ -13,8 +13,8 @@ export default function Spinner(
         width: `${size * 4}px`,
         height: `${size * 4}px`,
         borderWidth: `${border}px`,
-        borderColor: "rgb(209 213 219)",
-        borderTopColor: "rgb(79 70 229)",
+        borderColor: "var(--border)",
+        borderTopColor: "var(--primary)",
       }}
     />
   );

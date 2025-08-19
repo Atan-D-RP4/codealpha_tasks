@@ -108,10 +108,10 @@ export default function SourcesPage() {
       <Container>
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-foreground">
               Platform Sources
             </h1>
-            <p className="text-gray-600 mt-1">
+            <p className="text-muted-foreground mt-1">
               Connect your AI chat platforms to aggregate conversations
             </p>
           </div>

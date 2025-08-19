@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "grok",
     "gemini",
     "ai chats",
-    "conversation manager"
+    "conversation manager",
   ],
   robots: "index, follow",
   icons: {
@@ -48,9 +48,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-slate-50 to-blue-100`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased min-h-screen`}
       >
         <AuthProvider>
           <Header />

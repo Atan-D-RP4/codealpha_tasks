@@ -33,21 +33,21 @@ export default function ProfilePage() {
         {message && <Alert className="mb-4">{message}</Alert>}
         <form
           onSubmit={save}
-          className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm mb-8 grid gap-4"
+          className="bg-card rounded-xl p-4 border border-border shadow-sm mb-8 grid gap-4"
         >
           <div>
-            <label className="block mb-1 font-medium">Display name</label>
+            <label className="block mb-1 text-foreground font-medium">Display name</label>
             <Input
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
             />
           </div>
           <div>
-            <label className="block mb-1 font-medium">Bio</label>
+            <label className="block mb-1 text-foreground font-medium">Bio</label>
             <Input value={bio} onChange={(e) => setBio(e.target.value)} />
           </div>
           <div>
-            <label className="block mb-1 font-medium">Avatar URL</label>
+            <label className="block mb-1 text-foreground font-medium">Avatar URL</label>
             <Input value={avatar} onChange={(e) => setAvatar(e.target.value)} />
           </div>
           <div className="flex justify-end">

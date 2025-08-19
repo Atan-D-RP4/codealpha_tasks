@@ -99,10 +99,10 @@ export default function ChatDetailPage() {
       <div className="py-8">
         <Container>
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl font-bold text-foreground mb-4">
               Chat Details
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted-foreground mb-6">
               Please log in to view chat details.
             </p>
             <Button onClick={() => window.location.href = "/login"}>
@@ -119,8 +119,8 @@ export default function ChatDetailPage() {
       <div className="py-8">
         <Container>
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading chat...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                    <p className="ml-4 text-muted-foreground">Loading chat...</p>
           </div>
         </Container>
       </div>
@@ -161,7 +161,7 @@ export default function ChatDetailPage() {
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-3xl">{platform.emoji}</span>
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-foreground">
                   {chat.title}
                 </h1>
               </div>
@@ -170,10 +170,10 @@ export default function ChatDetailPage() {
                 <Badge color={platform.color}>
                   {platform.name}
                 </Badge>
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-muted-foreground">
                   {chat.message_count} messages
                 </span>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-muted-foreground">
                   Created {formatDate(chat.created_at)}
                 </span>
               </div>
@@ -195,7 +195,7 @@ export default function ChatDetailPage() {
                   href={chat.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 text-sm"
+                  className="text-primary hover:text-primary/80 text-sm"
                 >
                   <Button variant="secondary">
                     View Original ↗
@@ -211,10 +211,10 @@ export default function ChatDetailPage() {
           {chat.messages.length === 0 ? (
             <Card className="text-center py-8">
               <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-foreground mb-2">
                 No Messages
               </h3>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 This chat doesn't have any messages yet.
               </p>
             </Card>
@@ -224,10 +224,10 @@ export default function ChatDetailPage() {
                 key={message.id}
                 className={`${
                   message.role === "user"
-                    ? "ml-8 bg-blue-50 border-blue-200"
+                    ? "ml-8 bg-blue-900 border-blue-700"
                     : message.role === "assistant"
-                    ? "mr-8 bg-gray-50"
-                    : "bg-yellow-50 border-yellow-200"
+                    ? "mr-8 bg-secondary"
+                    : "bg-yellow-900 border-yellow-700"
                 }`}
               >
                 <div className="flex justify-between items-start mb-2">
@@ -241,13 +241,13 @@ export default function ChatDetailPage() {
                     {message.role === "assistant" && <span>{platform.emoji}</span>}
                     {message.role === "system" && <span>⚙️</span>}
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-foreground">
                     {formatMessageTime(message.timestamp)}
                   </span>
                 </div>
                 
                 <div className="prose prose-sm max-w-none">
-                  <div className="whitespace-pre-wrap text-gray-800">
+                  <div className="whitespace-pre-wrap text-foreground">
                     {message.content}
                   </div>
                 </div>

@@ -6,14 +6,14 @@ type Variant = "primary" | "secondary" | "success" | "danger" | "ghost";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-500/30",
+    "bg-primary text-primary-foreground hover:bg-primary/90",
   secondary:
-    "bg-white/80 text-gray-800 border border-gray-200 hover:-translate-y-0.5 hover:shadow-lg",
+    "bg-secondary text-secondary-foreground border border-border hover:bg-secondary/80",
   success:
-    "bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-green-500/30",
+    "bg-green-600 text-white hover:bg-green-700",
   danger:
-    "bg-gradient-to-r from-red-500 to-rose-600 text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-rose-500/30",
-  ghost: "bg-transparent text-gray-700 hover:bg-gray-100",
+    "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+  ghost: "bg-transparent text-muted-foreground hover:bg-accent",
 };
 
 export default function Button({

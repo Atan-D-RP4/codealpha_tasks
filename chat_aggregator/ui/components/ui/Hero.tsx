@@ -7,13 +7,13 @@ import Button from "./Button.tsx";
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-br from-slate-50 to-blue-100 border-b border-black/5 min-h-screen flex items-center">
+    <section className="bg-background border-b border-border min-h-screen flex items-center">
       <Container className="py-16 grid gap-10 md:grid-cols-2 items-center">
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Centralize Your AI Conversations
           </h1>
-          <p className="text-gray-600 mb-6 text-lg">
+          <p className="text-muted-foreground mb-6 text-lg">
             Aggregate, search, and manage your chats from ChatGPT, Claude, Grok,
             and other AI platforms in one clean interface.
           </p>
@@ -29,25 +29,25 @@ export default function Hero() {
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-3xl mb-2">🤖</div>
-              <div className="text-sm text-gray-600">ChatGPT</div>
+              <div className="text-sm text-muted-foreground">ChatGPT</div>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-2">🔮</div>
-              <div className="text-sm text-gray-600">Claude</div>
+              <div className="text-sm text-muted-foreground">Claude</div>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-2">
                 🧠
               </div>
-              <div className="text-sm text-gray-600">Grok</div>
+              <div className="text-sm text-muted-foreground">Grok</div>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-2">🌐</div>
-              <div className="text-sm text-gray-600">Gemini</div>
+              <div className="text-sm text-muted-foreground">Gemini</div>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-2">📂</div>
-              <div className="text-sm text-gray-600">Other Sources</div>
+              <div className="text-sm text-muted-foreground">Other Sources</div>
             </div>
           </div>
         </div>

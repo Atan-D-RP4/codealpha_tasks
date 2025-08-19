@@ -101,8 +101,8 @@ export default function CookieInstructions() {
                   onClick={() => setSelectedPlatform(key as keyof typeof platformInstructions)}
                   className={`p-4 rounded-lg border-2 transition-all ${
                     selectedPlatform === key
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-200 hover:border-gray-300"
+                      ? "border-primary bg-accent"
+                      : "border-border hover:border-muted-foreground"
                   }`}
                 >
                   <div className="text-2xl mb-2">{platform.emoji}</div>
@@ -118,7 +118,7 @@ export default function CookieInstructions() {
                 <h3 className="text-lg font-semibold mb-3">
                   {platformInstructions[selectedPlatform].emoji} {platformInstructions[selectedPlatform].name} Instructions:
                 </h3>
-                <ol className="list-decimal list-inside space-y-2 text-gray-700">
+                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
                   {platformInstructions[selectedPlatform].steps.map((step, index) => (
                     <li key={index}>{step}</li>
                   ))}
@@ -131,7 +131,7 @@ export default function CookieInstructions() {
                   {platformInstructions[selectedPlatform].importantCookies.map((cookie) => (
                     <span
                       key={cookie}
-                      className="px-3 py-1 bg-gray-100 rounded-full text-sm font-mono"
+                      className="px-3 py-1 bg-muted rounded-full text-sm font-mono"
                     >
                       {cookie}
                     </span>
@@ -141,26 +141,26 @@ export default function CookieInstructions() {
 
               <div>
                 <h4 className="font-semibold mb-2">Cookie Format:</h4>
-                <p className="text-sm text-gray-600 mb-2">
+                <p className="text-sm text-muted-foreground mb-2">
                   Copy your cookies in this JSON format:
                 </p>
-                <pre className="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+                <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto">
                   {cookieFormat}
                 </pre>
               </div>
 
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-800 mb-2">⚠️ Security Note:</h4>
-                <p className="text-sm text-yellow-700">
+              <div className="bg-yellow-900 border border-yellow-700 rounded-lg p-4">
+                <h4 className="font-semibold text-yellow-300 mb-2">⚠️ Security Note:</h4>
+                <p className="text-sm text-yellow-300">
                   Cookies contain sensitive authentication information. Only enter cookies from platforms you trust, 
                   and never share your cookies with others. These cookies will be stored securely and used only 
                   to access your chat history.
                 </p>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-800 mb-2">💡 Pro Tip:</h4>
-                <p className="text-sm text-blue-700">
+              <div className="bg-blue-900 border border-blue-700 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-300 mb-2">💡 Pro Tip:</h4>
+                <p className="text-sm text-blue-300">
                   You can also use browser extensions like "Cookie Editor" or "EditThisCookie" to export 
                   cookies in JSON format more easily.
                 </p>

@@ -9,9 +9,8 @@ export function Card(
   },
 ) {
   return (
-    <div
-      className={`bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 ${className}`}
-    >
+    <div>
+      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
       {children}
     </div>
   );
@@ -33,7 +32,7 @@ export function CardTitle(
   },
 ) {
   return (
-    <h3 className={`text-xl font-semibold text-gray-800 ${className}`}>
+    <h3 className={`text-xl font-semibold text-card-foreground ${className}`}>
       {children}
     </h3>
   );
@@ -45,7 +44,7 @@ export function CardDescription(
     children: React.ReactNode;
   },
 ) {
-  return <p className={`text-gray-600 ${className}`}>{children}</p>;
+  return <p className={`text-muted-foreground ${className}`}>{children}</p>;
 }
 
 export function CardFooter(

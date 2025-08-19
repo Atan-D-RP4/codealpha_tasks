@@ -44,8 +44,8 @@ export default function PlatformAccountList({
   if (loading) {
     return (
       <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-2 text-gray-600">Loading platform accounts...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-4 text-muted-foreground">Loading accounts...</p>
       </div>
     );
   }
@@ -54,10 +54,10 @@ export default function PlatformAccountList({
     return (
       <div className="text-center py-8">
         <div className="text-4xl mb-4">🔗</div>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           No Platform Accounts
         </h3>
-        <p className="text-gray-600 mb-4">
+        <p className="text-muted-foreground mb-4">
           Add your first platform account to start aggregating chats
         </p>
       </div>
@@ -72,19 +72,19 @@ export default function PlatformAccountList({
         return (
           <div
             key={account.id}
-            className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="bg-card rounded-xl p-4 shadow-sm border border-border flex items-center justify-between"
           >
             <div className="flex items-center space-x-4">
               <div className="text-2xl">{platform.emoji}</div>
               <div>
-                <h3 className="font-medium text-gray-900">
+                <h3 className="font-medium text-foreground">
                   {account.account_name}
                 </h3>
                 <div className="flex items-center space-x-2 mt-1">
                   <Badge color={platform.color}>
                     {platform.name}
                   </Badge>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-muted-foreground">
                     Added {formatDate(account.created_at)}
                   </span>
                 </div>

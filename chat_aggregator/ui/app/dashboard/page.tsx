@@ -176,10 +176,10 @@ export default function ChatDashboard() {
       <Container>
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-foreground">
               Chat Aggregator
             </h1>
-            <p className="text-gray-600 mt-1">
+            <p className="text-muted-foreground mt-1">
               View and manage your AI conversations
             </p>
           </div>
@@ -193,7 +193,7 @@ export default function ChatDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
                   Total Chats
                 </CardTitle>
                 <div className="text-2xl font-bold">{stats.totalChats}</div>
@@ -201,7 +201,7 @@ export default function ChatDashboard() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
                   Total Messages
                 </CardTitle>
                 <div className="text-2xl font-bold">{stats.totalMessages}</div>
@@ -209,7 +209,7 @@ export default function ChatDashboard() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
                   Favorites
                 </CardTitle>
                 <div className="text-2xl font-bold">{stats.favoriteCount}</div>
@@ -217,7 +217,7 @@ export default function ChatDashboard() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
                   Platforms
                 </CardTitle>
                 <div className="text-2xl font-bold">
@@ -229,7 +229,7 @@ export default function ChatDashboard() {
         )}
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border mb-6">
+        <div className="bg-card rounded-xl p-6 shadow-sm border border-border mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <Input
@@ -242,7 +242,7 @@ export default function ChatDashboard() {
             <select
               value={selectedPlatform}
               onChange={(e) => setSelectedPlatform(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
             >
               <option value="all">All Platforms</option>
               <option value="chatgpt">ChatGPT</option>
@@ -258,7 +258,7 @@ export default function ChatDashboard() {
                 onChange={(e) => setShowFavorites(e.target.checked)}
                 className="rounded"
               />
-              <span className="text-sm">Favorites only</span>
+              <span className="text-sm text-muted-foreground">Favorites only</span>
             </label>
             <Button onClick={handleSearch} variant="secondary">
               Search
@@ -272,19 +272,19 @@ export default function ChatDashboard() {
         {loading
           ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto">
               </div>
-              <p className="mt-4 text-gray-600">Loading chats...</p>
+              <p className="mt-4 text-muted-foreground">Loading chats...</p>
             </div>
           )
           : chats.length === 0
           ? (
-            <div className="text-center py-12 bg-white rounded-xl shadow-sm border">
+            <div className="text-center py-12 bg-card rounded-xl shadow-sm border border-border">
               <div className="text-6xl mb-4">💬</div>
-              <h3 className="text-xl font-medium text-gray-900 mb-2">
+              <h3 className="text-xl font-medium text-foreground mb-2">
                 No chats found
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-muted-foreground mb-4">
                 {searchQuery
                   ? "Try a different search term"
                   : "Sync your sources to import chats"}
@@ -309,7 +309,7 @@ export default function ChatDashboard() {
                         <span className="text-2xl">
                           {platformEmojis[chat.platform]}
                         </span>
-                        <h3 className="font-semibold text-gray-900 flex-1">
+                        <h3 className="font-semibold text-foreground flex-1">
                           {chat.title}
                         </h3>
                         <button
@@ -317,7 +317,7 @@ export default function ChatDashboard() {
                           className={`text-xl ${
                             chat.is_favorite
                               ? "text-yellow-500"
-                              : "text-gray-300 hover:text-yellow-500"
+                              : "text-muted-foreground hover:text-yellow-500"
                           }`}
                         >
                           ⭐
@@ -328,10 +328,10 @@ export default function ChatDashboard() {
                         <Badge color={platformColors[chat.platform]}>
                           {chat.platform}
                         </Badge>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-muted-foreground">
                           {chat.message_count} messages
                         </span>
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-muted-foreground">
                           {formatDate(chat.created_at)}
                         </span>
                       </div>
@@ -349,7 +349,7 @@ export default function ChatDashboard() {
                       <div className="flex gap-2">
                         <a
                           href={`/chats/${chat.id}`}
-                          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                          className="text-primary hover:text-primary/80 text-sm font-medium"
                         >
                           View Messages →
                         </a>
@@ -358,7 +358,7 @@ export default function ChatDashboard() {
                             href={chat.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-600 hover:text-gray-800 text-sm"
+                            className="text-muted-foreground hover:text-foreground text-sm"
                           >
                             Original ↗
                           </a>

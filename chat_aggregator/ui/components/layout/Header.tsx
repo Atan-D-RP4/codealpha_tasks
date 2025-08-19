@@ -15,11 +15,11 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm border-b border-black/10 shadow-lg sticky top-0 z-50">
+    <header className="bg-background backdrop-blur-sm border-b border-border shadow-lg sticky top-0 z-50">
       <Container className="flex justify-between items-center py-4">
         <Link
           href="/"
-          className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+          className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
         >
           🤖 Chat Aggregator
         </Link>
@@ -29,15 +29,15 @@ export default function Header() {
             <>
               <Link
                 href="/dashboard"
-                className="text-gray-700 hover:text-blue-600 font-medium"
+                className="text-muted-foreground hover:text-primary font-medium"
               >
                 Dashboard
               </Link>
-              <Link href="/sources" className="text-gray-700 hover:text-blue-600">
+              <Link href="/sources" className="text-muted-foreground hover:text-primary">
                 Sources
               </Link>
               <div className="flex items-center gap-3 ml-4">
-                <span className="text-gray-600">Hi, {user.username}</span>
+                <span className="text-muted-foreground">Hi, {user.username}</span>
                 <Button variant="ghost" onClick={handleLogout} className="text-sm">
                   Logout
                 </Button>
@@ -45,7 +45,7 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link href="/sources" className="text-gray-700 hover:text-blue-600">
+              <Link href="/sources" className="text-muted-foreground hover:text-primary">
                 Sources
               </Link>
               <Link href="/login">

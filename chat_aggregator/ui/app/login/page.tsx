@@ -75,25 +75,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-5">
+    <div className="min-h-screen bg-background flex items-center justify-center p-5">
       <Container>
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-10 shadow-2xl w-full max-w-md border border-white/20 mx-auto">
+        <div className="bg-card rounded-3xl p-10 shadow-2xl w-full max-w-md border border-border mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-gray-800 text-3xl font-semibold mb-2">
+            <h1 className="text-card-foreground text-3xl font-semibold mb-2">
               Welcome
             </h1>
-            <p className="text-gray-600 text-sm">
+            <p className="text-muted-foreground text-sm">
               Sign in to access your secure dashboard
             </p>
           </div>
 
-          <div className="flex mb-8 bg-gray-100 rounded-xl p-1">
+          <div className="flex mb-8 bg-secondary rounded-xl p-1">
             <button
               type="button"
               className={`flex-1 p-3 text-center rounded-lg cursor-pointer transition-all duration-300 font-medium ${
                 activeTab === "signin"
-                  ? "bg-white text-gray-800 shadow-md"
-                  : "text-gray-600 hover:text-gray-800"
+                  ? "bg-background text-foreground shadow-md"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               onClick={() => setActiveTab("signin")}
             >
@@ -103,8 +103,8 @@ export default function LoginPage() {
               type="button"
               className={`flex-1 p-3 text-center rounded-lg cursor-pointer transition-all duration-300 font-medium ${
                 activeTab === "signup"
-                  ? "bg-white text-gray-800 shadow-md"
-                  : "text-gray-600 hover:text-gray-800"
+                  ? "bg-background text-foreground shadow-md"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               onClick={() => setActiveTab("signup")}
             >
@@ -128,7 +128,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="login-username"
-                    className="block mb-2 text-gray-800 font-medium text-sm"
+                    className="block mb-2 text-foreground font-medium text-sm"
                   >
                     Username
                   </label>
@@ -142,7 +142,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="login-password"
-                    className="block mb-2 text-gray-800 font-medium text-sm"
+                    className="block mb-2 text-foreground font-medium text-sm"
                   >
                     Password
                   </label>
@@ -160,7 +160,7 @@ export default function LoginPage() {
                 >
                   {loading
                     ? (
-                      <span className="inline-block w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span className="inline-block w-5 h-5 border-3 border-primary/30 border-t-primary rounded-full animate-spin" />
                     )
                     : "Sign In"}
                 </Button>
@@ -171,7 +171,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="register-username"
-                    className="block mb-2 text-gray-800 font-medium text-sm"
+                    className="block mb-2 text-foreground font-medium text-sm"
                   >
                     Username
                   </label>
@@ -187,7 +187,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="register-email"
-                    className="block mb-2 text-gray-800 font-medium text-sm"
+                    className="block mb-2 text-foreground font-medium text-sm"
                   >
                     Email
                   </label>
@@ -201,7 +201,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="register-password"
-                    className="block mb-2 text-gray-800 font-medium text-sm"
+                    className="block mb-2 text-foreground font-medium text-sm"
                   >
                     Password
                   </label>
@@ -221,7 +221,7 @@ export default function LoginPage() {
                 >
                   {loading
                     ? (
-                      <span className="inline-block w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span className="inline-block w-5 h-5 border-3 border-primary/30 border-t-primary rounded-full animate-spin" />
                     )
                     : "Sign Up"}
                 </Button>

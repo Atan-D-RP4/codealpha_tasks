@@ -7,7 +7,7 @@ export default function Input(
 ) {
   return (
     <input
-      className={`w-full p-4 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 bg-white focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 ${className}`}
+      className={`w-full p-4 border-2 border-border rounded-xl text-foreground text-base transition-all duration-300 bg-input focus:outline-none focus:border-ring focus:ring-ring/10 ${className}`}
       {...props}
     />
   );

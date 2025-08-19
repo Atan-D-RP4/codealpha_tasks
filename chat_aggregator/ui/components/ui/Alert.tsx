@@ -12,10 +12,10 @@ export default function Alert({
   className?: string;
 }) {
   const styles: Record<string, string> = {
-    info: "bg-blue-50 text-blue-700 border border-blue-200",
-    success: "bg-green-50 text-green-700 border border-green-200",
-    error: "bg-red-50 text-red-700 border border-red-200",
-    warning: "bg-yellow-50 text-yellow-800 border border-yellow-200",
+    info: "bg-blue-900 text-blue-300 border border-blue-700",
+    success: "bg-green-900 text-green-300 border border-green-700",
+    error: "bg-destructive text-destructive-foreground border border-red-700",
+    warning: "bg-yellow-900 text-yellow-300 border border-yellow-700",
   };
 
   return (

@@ -169,13 +169,13 @@ export default function PlatformAccountForm({ account, onSuccess, onCancel }: Pl
 
       {!account && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Platform
           </label>
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value as any)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
             required
           >
             {platforms.map((p) => (
@@ -188,7 +188,7 @@ export default function PlatformAccountForm({ account, onSuccess, onCancel }: Pl
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Account Name
         </label>
         <Input
@@ -204,17 +204,17 @@ export default function PlatformAccountForm({ account, onSuccess, onCancel }: Pl
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           Cookies
         </label>
         <textarea
           value={cookiesText}
           onChange={handleCookieTextChange}
           placeholder={exampleCookies}
-          className="w-full h-40 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+          className="w-full h-40 p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary font-mono text-sm"
           required
         />
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Paste your cookies in JSON format or as simple name=value pairs (one per line)
         </p>
       </div>
