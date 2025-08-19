@@ -69,8 +69,14 @@ export class SessionManager {
   async refreshJWTTokens(
     refreshToken: string,
   ): Promise<{ accessToken: string; refreshToken: string } | null> {
-    const payload = this.jwtService.verifyRefreshToken(refreshToken);
+    const payload = await this.jwtService.verifyTokenWithRevocation(
+      refreshToken,
+    );
     if (!payload) return null;
+    if (!payload.jti) {
+      console.error("Refresh token does not have a JTI");
+      return null;
+    }
 
     const user = await this.db.getUserById(payload.userId);
     if (!user) return null;

@@ -3,11 +3,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
-import { AuthProvider } from "@/components/authContext.tsx";
 import Header from "@/components/layout/Header.tsx";
 import Footer from "@/components/layout/Footer.tsx";
+import { AuthProvider } from "@/components/authContext.tsx";
 
-// Font setup at module scope (important for hydration consistency)
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,25 +17,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// import process from "node:process";
-// const { SITE_NAME } = process.env;
-
-/**
- * Static metadata — handled automatically by Next.js
- * Avoids manually editing <head>
- */
 export const metadata: Metadata = {
-  title: "Template",
-  description: "Next.js UI and Express API template",
+  title: "Chat Aggregator",
+  description: "View and manage your AI conversations from multiple platforms",
   keywords: [
-    "",
+    "chatgpt",
+    "claude",
+    "grok",
+    "gemini",
+    "ai chats",
+    "conversation manager"
   ],
   robots: "index, follow",
   icons: {
     icon: "/favicon.ico",
   },
 };
-// Viewport settings export
+
 export const viewport = {
   width: "device-width",
   initialScale: 1,
@@ -57,7 +54,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Header />
-          {children}
+          <main className="min-h-screen">
+            {children}
+          </main>
           <Footer />
         </AuthProvider>
       </body>

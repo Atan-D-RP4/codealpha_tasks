@@ -89,6 +89,6 @@ export class JWTService {
   }
 
   async revokeToken(jti: string): Promise<void> {
-    await this.db.revokeToken(jti, new Date(Date.now()));
+    await this.db.revokeToken(jti, new Date(Date.now() - 1000));
   }
 }

@@ -3,7 +3,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import process from "node:process";
 
-import { LoginSchema, RegisterSchema, User } from "./schema.ts";
+import {
+  CreateChatSchema,
+  CreateMessageSchema,
+  LoginSchema,
+  RegisterSchema,
+  UpdateChatSchema,
+  User,
+} from "./schema.ts";
 
 import { SqliteAdapter } from "./db.ts";
 import {
@@ -15,6 +22,7 @@ import {
 
 import { JWTService } from "./jwt.ts";
 import { SessionManager } from "./session.ts";
+import { ChatService } from "./chat.ts";
 
 // =============================================================================
 // SERVER SETUP
@@ -46,6 +54,9 @@ async function startServer() {
   const jwtService = new JWTService(JWT_SECRET, JWT_REFRESH_SECRET, db);
   const sessionManager = new SessionManager(db, jwtService);
   const authService = new AuthService(db, sessionManager, jwtService);
+
+  const chatService = new ChatService(db);
+  // chatService.registerSource(new ScraperSource());
 
   // Cleanup expired sessions
   setInterval(() => {
@@ -136,6 +147,327 @@ async function startServer() {
         avatar_url: user.avatar_url,
       },
     });
+  });
+
+  // Get all chats with filtering
+  apiRoutes.get("/chats", async (req: Request, res: Response) => {
+    try {
+      const {
+        platform,
+        is_favorite,
+        is_archived,
+        tags,
+        limit = "50",
+        offset = "0",
+      } = req.query;
+
+      const filters = {
+        platform: platform as string,
+        is_favorite: is_favorite === "true"
+          ? true
+          : is_favorite === "false"
+          ? false
+          : undefined,
+        is_archived: is_archived === "true"
+          ? true
+          : is_archived === "false"
+          ? false
+          : undefined,
+        tags: tags ? (tags as string).split(",") : undefined,
+        limit: parseInt(limit as string),
+        offset: parseInt(offset as string),
+      };
+
+      const chats = await chatService.getChats(filters);
+      res.json({ success: true, data: chats });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Get chat by ID with messages
+  apiRoutes.get("/chats/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const chat = await chatService.getChatWithMessages(id);
+
+      if (!chat) {
+        return res.status(404).json({
+          success: false,
+          error: "Chat not found",
+        });
+      }
+
+      res.json({ success: true, data: chat });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Create chat
+  apiRoutes.post("/chats", async (req: Request, res: Response) => {
+    try {
+      const data = CreateChatSchema.parse(req.body);
+      const chat = await chatService.createChat(data);
+      res.status(201).json({ success: true, data: chat });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Update chat
+  apiRoutes.patch("/chats/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = UpdateChatSchema.parse(req.body);
+
+      await chatService.updateChat(id, updates);
+      const updatedChat = await chatService.getChatById(id);
+
+      res.json({ success: true, data: updatedChat });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Delete chat
+  apiRoutes.delete("/chats/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      await chatService.deleteChat(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Search chats
+  apiRoutes.get("/chats/search/:query", async (req: Request, res: Response) => {
+    try {
+      const { query } = req.params;
+      const { limit = "20" } = req.query;
+
+      const chats = await chatService.searchChats(
+        query,
+        parseInt(limit as string),
+      );
+      res.json({ success: true, data: chats });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Add message to chat
+  apiRoutes.post("/chats/:id/messages", async (req: Request, res: Response) => {
+    try {
+      const chatId = parseInt(req.params.id);
+      const data = CreateMessageSchema.parse({
+        ...req.body,
+        chat_id: chatId,
+      });
+
+      const message = await chatService.createMessage(data);
+      res.status(201).json({ success: true, data: message });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Sync all sources
+  apiRoutes.post("/chats/sync", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.user!.id;
+      // Load user sources before syncing
+      await chatService.loadUserSources(userId);
+      const result = await chatService.syncAllSources();
+      res.json({ success: true, data: result });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Get stats
+  apiRoutes.get("/chats/stats/overview", async (req: Request, res: Response) => {
+    try {
+      const stats = await chatService.getStats();
+      res.json({ success: true, data: stats });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Get registered sources
+  apiRoutes.get("/chats/sources/list", async (req: Request, res: Response) => {
+    try {
+      const sources = chatService.getRegisteredSources().map((source) => ({
+        name: source.name,
+        platform: source.platform,
+      }));
+      res.json({ success: true, data: sources });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Platform Account Management Routes
+  
+  // Get user's platform accounts
+  apiRoutes.get("/platform-accounts", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.user!.id;
+      const accounts = await db.getPlatformAccountsByUserId(userId);
+      // Don't send cookies in the response for security
+      const sanitizedAccounts = accounts.map(account => ({
+        id: account.id,
+        platform: account.platform,
+        account_name: account.account_name,
+        created_at: account.created_at,
+      }));
+      res.json({ success: true, data: sanitizedAccounts });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Create new platform account
+  apiRoutes.post("/platform-accounts", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.user!.id;
+      const { platform, account_name, cookies } = req.body;
+      
+      // Validate input
+      if (!platform || !account_name || !cookies) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Platform, account name, and cookies are required" 
+        });
+      }
+      
+      // Validate platform
+      const validPlatforms = ["chatgpt", "claude", "grok", "gemini"];
+      if (!validPlatforms.includes(platform)) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Invalid platform. Must be one of: " + validPlatforms.join(", ") 
+        });
+      }
+      
+      // Validate cookies format
+      if (!Array.isArray(cookies)) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Cookies must be an array" 
+        });
+      }
+      
+      for (const cookie of cookies) {
+        if (!cookie.name || !cookie.value) {
+          return res.status(400).json({ 
+            success: false, 
+            error: "Each cookie must have name and value" 
+          });
+        }
+      }
+      
+      const account = await db.createPlatformAccount(userId, platform, account_name, cookies);
+      
+      // Register the source with chat service
+      await chatService.loadUserSources(userId);
+      
+      res.status(201).json({ 
+        success: true, 
+        data: {
+          id: account.id,
+          platform: account.platform,
+          account_name: account.account_name,
+          created_at: account.created_at,
+        }
+      });
+    } catch (error) {
+      if ((error as Error).message.includes("UNIQUE constraint failed")) {
+        res.status(400).json({ 
+          success: false, 
+          error: "An account with this name already exists for this platform" 
+        });
+      } else {
+        res.status(500).json({ success: false, error: (error as Error).message });
+      }
+    }
+  });
+
+  // Update platform account
+  apiRoutes.put("/platform-accounts/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.user!.id;
+      const accountId = parseInt(req.params.id);
+      const { account_name, cookies } = req.body;
+      
+      // Verify account belongs to user
+      const existingAccount = await db.getPlatformAccountById(accountId);
+      if (!existingAccount || existingAccount.user_id !== userId) {
+        return res.status(404).json({ 
+          success: false, 
+          error: "Platform account not found" 
+        });
+      }
+      
+      const updates: any = {};
+      if (account_name) updates.account_name = account_name;
+      if (cookies) {
+        // Validate cookies format
+        if (!Array.isArray(cookies)) {
+          return res.status(400).json({ 
+            success: false, 
+            error: "Cookies must be an array" 
+          });
+        }
+        
+        for (const cookie of cookies) {
+          if (!cookie.name || !cookie.value) {
+            return res.status(400).json({ 
+              success: false, 
+              error: "Each cookie must have name and value" 
+            });
+          }
+        }
+        updates.cookies = cookies;
+      }
+      
+      await db.updatePlatformAccount(accountId, updates);
+      
+      // Reload sources
+      await chatService.loadUserSources(userId);
+      
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
+  });
+
+  // Delete platform account
+  apiRoutes.delete("/platform-accounts/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const userId = req.user!.id;
+      const accountId = parseInt(req.params.id);
+      
+      // Verify account belongs to user
+      const existingAccount = await db.getPlatformAccountById(accountId);
+      if (!existingAccount || existingAccount.user_id !== userId) {
+        return res.status(404).json({ 
+          success: false, 
+          error: "Platform account not found" 
+        });
+      }
+      
+      await db.deletePlatformAccount(accountId);
+      
+      // Reload sources
+      await chatService.loadUserSources(userId);
+      
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ success: false, error: (error as Error).message });
+    }
   });
 
   // =============================================================================
@@ -237,28 +569,30 @@ async function startServer() {
     res.json({
       success: true,
       status: "healthy",
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(),
     });
   });
 
   // Start server
+  // Start server
   app.listen(PORT, () => {
-    console.log("🚀 Starting server...");
-    console.log(`📡 Server running on http://localhost:${PORT}`);
-    console.log(`🌐 Web API: http://localhost:${PORT}/api/`);
-    console.log(`📱 Mobile API: http://localhost:${PORT}/api/mobile/`);
-    console.log(`🔍 Health Check: http://localhost:${PORT}/health`);
-    console.log(`🎯 CORS Origin: ${UI_ORIGIN}`);
+    console.log("🚀 Chat Aggregator Server");
+    console.log(`📡 Server: http://localhost:${PORT}`);
+    console.log(`🤖 Chats API: http://localhost:${PORT}/api/chats`);
+    console.log(`🔍 Health: http://localhost:${PORT}/health`);
     console.log("");
     console.log("📋 Available Endpoints:");
-    console.log("  Auth: POST /api/register, /api/login, /api/logout");
-    console.log(
-      "  Profile: GET /api/me, PATCH /api/profile, GET /api/users/:id",
-    );
+    console.log("  GET    /api/chats - List all chats");
+    console.log("  GET    /api/chats/:id - Get chat with messages");
+    console.log("  POST   /api/chats - Create new chat");
+    console.log("  PATCH  /api/chats/:id - Update chat");
+    console.log("  DELETE /api/chats/:id - Delete chat");
+    console.log("  GET    /api/chats/search/:query - Search chats");
+    console.log("  POST   /api/chats/sync - Sync from all sources");
+    console.log("  GET    /api/chats/stats/overview - Get stats");
+    console.log("  GET    /api/platform-accounts - List platform accounts");
+    console.log("  POST   /api/platform-accounts - Add platform account");
     console.log("");
-    console.log(
-      "⚠️  Remember to set JWT_SECRET and JWT_REFRESH_SECRET in production!",
-    );
   });
 }
 

@@ -206,7 +206,7 @@ export function apiAuthMiddleware(authService: AuthService) {
     }
 
     const token = authHeader.substring(7);
-    const user = await authService.validateJWTSession(token);
+    const user = await authService.validateJWTSession(token, true);
 
     if (!user) {
       return res.status(401).json({ error: "Invalid or expired token" });
