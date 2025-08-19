@@ -1,0 +1,32 @@
+{
+  "unstable": [
+    "unsafe-proto",
+    "sloppy-imports"
+  ],
+  "nodeModulesDir": "auto",
+  "workspace": ["./ui/"],
+  "tasks": {
+    "dev": "deno run --allow-all --watch ./backend/main.ts",
+    "dev:ui": "cd ./ui && deno task dev",
+    "dev:full": "deno task dev & deno task dev:ui &"
+  },
+  "imports": {
+    "@types/bcrypt": "npm:@types/bcrypt@^6.0.0",
+    "@types/cors": "npm:@types/cors@^2.8.19",
+    "@types/express": "npm:@types/express@^5.0.3",
+    "@types/jsonwebtoken": "npm:@types/jsonwebtoken@^9.0.10",
+    "@std/assert": "jsr:@std/assert@1",
+    "bcrypt": "npm:bcrypt@^6.0.0",
+    "cookie-parser": "npm:cookie-parser@^1.4.7",
+    "cors": "npm:cors@^2.8.5",
+    "express": "npm:express@^5.1.0",
+    "jsonwebtoken": "npm:jsonwebtoken@^9.0.2",
+    // "mysql2": "npm:mysql2@^3.14.3",
+    // "pg": "npm:pg@^8.16.3",
+    "sqlite": "npm:sqlite@^5.1.1",
+    "sqlite3": "npm:sqlite3@^5.1.7",
+    "zod": "npm:zod@^4.0.14",
+
+    "@/backend": "./backend/"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "lib": [ "dom", "dom.iterable", "esnext" ],
+    "strict": false
+  },
+
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+
+  "tasks": {
+    "dev": "deno run -A --unstable-detect-cjs npm:next@latest dev",
+    "build": "deno run -A --unstable-detect-cjs npm:next@latest build",
+    "start": "deno run -A --unstable-detect-cjs npm:next@latest start"
+  },
+  "imports": {
+    "@tailwindcss/postcss": "npm:@tailwindcss/postcss@^4.1.11",
+    "@types/node": "npm:@types/node@^24.2.1",
+    "@types/react": "npm:@types/react@^19.1.9",
+    "@types/react-dom": "npm:@types/react-dom@^19.1.7",
+
+    "next": "npm:next@^15.4.6",
+    "react": "npm:react@^19.1.1",
+    "react-dom": "npm:react-dom@^19.1.1",
+    "tailwindcss": "npm:tailwindcss@^4.1.11",
+
+    "@/components/": "./components/",
+    "@/backend": "../backend/",
+    "@/*": "./*",
+
+    // Can't really get rid of this. Next is a little bitch like that
+    "typescript": "npm:typescript@^5.9.2"
+  }
+}
