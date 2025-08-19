@@ -274,27 +274,40 @@ async function startServer() {
   });
 
   // Sync all sources
-  apiRoutes.post("/chats/sync", requireAuth, async (req: Request, res: Response) => {
-    try {
-      const userId = req.user!.id;
-      // Load user sources before syncing
-      await chatService.loadUserSources(userId);
-      const result = await chatService.syncAllSources();
-      res.json({ success: true, data: result });
-    } catch (error) {
-      res.status(500).json({ success: false, error: (error as Error).message });
-    }
-  });
+  apiRoutes.post(
+    "/chats/sync",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const userId = req.user!.id;
+        // Load user sources before syncing
+        await chatService.loadUserSources(userId);
+        const result = await chatService.syncAllSources();
+        res.json({ success: true, data: result });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          error: (error as Error).message,
+        });
+      }
+    },
+  );
 
   // Get stats
-  apiRoutes.get("/chats/stats/overview", async (req: Request, res: Response) => {
-    try {
-      const stats = await chatService.getStats();
-      res.json({ success: true, data: stats });
-    } catch (error) {
-      res.status(500).json({ success: false, error: (error as Error).message });
-    }
-  });
+  apiRoutes.get(
+    "/chats/stats/overview",
+    async (req: Request, res: Response) => {
+      try {
+        const stats = await chatService.getStats();
+        res.json({ success: true, data: stats });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          error: (error as Error).message,
+        });
+      }
+    },
+  );
 
   // Get registered sources
   apiRoutes.get("/chats/sources/list", async (req: Request, res: Response) => {
@@ -310,165 +323,199 @@ async function startServer() {
   });
 
   // Platform Account Management Routes
-  
-  // Get user's platform accounts
-  apiRoutes.get("/platform-accounts", requireAuth, async (req: Request, res: Response) => {
-    try {
-      const userId = req.user!.id;
-      const accounts = await db.getPlatformAccountsByUserId(userId);
-      // Don't send cookies in the response for security
-      const sanitizedAccounts = accounts.map(account => ({
-        id: account.id,
-        platform: account.platform,
-        account_name: account.account_name,
-        created_at: account.created_at,
-      }));
-      res.json({ success: true, data: sanitizedAccounts });
-    } catch (error) {
-      res.status(500).json({ success: false, error: (error as Error).message });
-    }
-  });
 
-  // Create new platform account
-  apiRoutes.post("/platform-accounts", requireAuth, async (req: Request, res: Response) => {
-    try {
-      const userId = req.user!.id;
-      const { platform, account_name, cookies } = req.body;
-      
-      // Validate input
-      if (!platform || !account_name || !cookies) {
-        return res.status(400).json({ 
-          success: false, 
-          error: "Platform, account name, and cookies are required" 
-        });
-      }
-      
-      // Validate platform
-      const validPlatforms = ["chatgpt", "claude", "grok", "gemini"];
-      if (!validPlatforms.includes(platform)) {
-        return res.status(400).json({ 
-          success: false, 
-          error: "Invalid platform. Must be one of: " + validPlatforms.join(", ") 
-        });
-      }
-      
-      // Validate cookies format
-      if (!Array.isArray(cookies)) {
-        return res.status(400).json({ 
-          success: false, 
-          error: "Cookies must be an array" 
-        });
-      }
-      
-      for (const cookie of cookies) {
-        if (!cookie.name || !cookie.value) {
-          return res.status(400).json({ 
-            success: false, 
-            error: "Each cookie must have name and value" 
-          });
-        }
-      }
-      
-      const account = await db.createPlatformAccount(userId, platform, account_name, cookies);
-      
-      // Register the source with chat service
-      await chatService.loadUserSources(userId);
-      
-      res.status(201).json({ 
-        success: true, 
-        data: {
+  // Get user's platform accounts
+  apiRoutes.get(
+    "/platform-accounts",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const userId = req.user!.id;
+        const accounts = await db.getPlatformAccountsByUserId(userId);
+        // Don't send cookies in the response for security
+        const sanitizedAccounts = accounts.map((account) => ({
           id: account.id,
           platform: account.platform,
           account_name: account.account_name,
           created_at: account.created_at,
-        }
-      });
-    } catch (error) {
-      if ((error as Error).message.includes("UNIQUE constraint failed")) {
-        res.status(400).json({ 
-          success: false, 
-          error: "An account with this name already exists for this platform" 
+        }));
+        res.json({ success: true, data: sanitizedAccounts });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          error: (error as Error).message,
         });
-      } else {
-        res.status(500).json({ success: false, error: (error as Error).message });
       }
-    }
-  });
+    },
+  );
 
-  // Update platform account
-  apiRoutes.put("/platform-accounts/:id", requireAuth, async (req: Request, res: Response) => {
-    try {
-      const userId = req.user!.id;
-      const accountId = parseInt(req.params.id);
-      const { account_name, cookies } = req.body;
-      
-      // Verify account belongs to user
-      const existingAccount = await db.getPlatformAccountById(accountId);
-      if (!existingAccount || existingAccount.user_id !== userId) {
-        return res.status(404).json({ 
-          success: false, 
-          error: "Platform account not found" 
-        });
-      }
-      
-      const updates: any = {};
-      if (account_name) updates.account_name = account_name;
-      if (cookies) {
-        // Validate cookies format
-        if (!Array.isArray(cookies)) {
-          return res.status(400).json({ 
-            success: false, 
-            error: "Cookies must be an array" 
+  // Create new platform account
+  apiRoutes.post(
+    "/platform-accounts",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const userId = req.user!.id;
+        const { platform, account_name, cookies } = req.body;
+
+        // Validate input
+        if (!platform || !account_name || !cookies) {
+          return res.status(400).json({
+            success: false,
+            error: "Platform, account name, and cookies are required",
           });
         }
-        
+
+        // Validate platform
+        const validPlatforms = ["chatgpt", "claude", "grok", "gemini"];
+        if (!validPlatforms.includes(platform)) {
+          return res.status(400).json({
+            success: false,
+            error: "Invalid platform. Must be one of: " +
+              validPlatforms.join(", "),
+          });
+        }
+
+        // Validate cookies format
+        if (!Array.isArray(cookies)) {
+          return res.status(400).json({
+            success: false,
+            error: "Cookies must be an array",
+          });
+        }
+
         for (const cookie of cookies) {
           if (!cookie.name || !cookie.value) {
-            return res.status(400).json({ 
-              success: false, 
-              error: "Each cookie must have name and value" 
+            return res.status(400).json({
+              success: false,
+              error: "Each cookie must have name and value",
             });
           }
         }
-        updates.cookies = cookies;
-      }
-      
-      await db.updatePlatformAccount(accountId, updates);
-      
-      // Reload sources
-      await chatService.loadUserSources(userId);
-      
-      res.json({ success: true });
-    } catch (error) {
-      res.status(500).json({ success: false, error: (error as Error).message });
-    }
-  });
 
-  // Delete platform account
-  apiRoutes.delete("/platform-accounts/:id", requireAuth, async (req: Request, res: Response) => {
-    try {
-      const userId = req.user!.id;
-      const accountId = parseInt(req.params.id);
-      
-      // Verify account belongs to user
-      const existingAccount = await db.getPlatformAccountById(accountId);
-      if (!existingAccount || existingAccount.user_id !== userId) {
-        return res.status(404).json({ 
-          success: false, 
-          error: "Platform account not found" 
+        const account = await db.createPlatformAccount(
+          userId,
+          platform,
+          account_name,
+          cookies,
+        );
+
+        // Register the source with chat service
+        await chatService.loadUserSources(userId);
+
+        res.status(201).json({
+          success: true,
+          data: {
+            id: account.id,
+            platform: account.platform,
+            account_name: account.account_name,
+            created_at: account.created_at,
+          },
+        });
+      } catch (error) {
+        if ((error as Error).message.includes("UNIQUE constraint failed")) {
+          res.status(400).json({
+            success: false,
+            error: "An account with this name already exists for this platform",
+          });
+        } else {
+          res.status(500).json({
+            success: false,
+            error: (error as Error).message,
+          });
+        }
+      }
+    },
+  );
+
+  // Update platform account
+  apiRoutes.put(
+    "/platform-accounts/:id",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const userId = req.user!.id;
+        const accountId = parseInt(req.params.id);
+        const { account_name, cookies } = req.body;
+
+        // Verify account belongs to user
+        const existingAccount = await db.getPlatformAccountById(accountId);
+        if (!existingAccount || existingAccount.user_id !== userId) {
+          return res.status(404).json({
+            success: false,
+            error: "Platform account not found",
+          });
+        }
+
+        const updates: any = {};
+        if (account_name) updates.account_name = account_name;
+        if (cookies) {
+          // Validate cookies format
+          if (!Array.isArray(cookies)) {
+            return res.status(400).json({
+              success: false,
+              error: "Cookies must be an array",
+            });
+          }
+
+          for (const cookie of cookies) {
+            if (!cookie.name || !cookie.value) {
+              return res.status(400).json({
+                success: false,
+                error: "Each cookie must have name and value",
+              });
+            }
+          }
+          updates.cookies = cookies;
+        }
+
+        await db.updatePlatformAccount(accountId, updates);
+
+        // Reload sources
+        await chatService.loadUserSources(userId);
+
+        res.json({ success: true });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          error: (error as Error).message,
         });
       }
-      
-      await db.deletePlatformAccount(accountId);
-      
-      // Reload sources
-      await chatService.loadUserSources(userId);
-      
-      res.json({ success: true });
-    } catch (error) {
-      res.status(500).json({ success: false, error: (error as Error).message });
-    }
-  });
+    },
+  );
+
+  // Delete platform account
+  apiRoutes.delete(
+    "/platform-accounts/:id",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const userId = req.user!.id;
+        const accountId = parseInt(req.params.id);
+
+        // Verify account belongs to user
+        const existingAccount = await db.getPlatformAccountById(accountId);
+        if (!existingAccount || existingAccount.user_id !== userId) {
+          return res.status(404).json({
+            success: false,
+            error: "Platform account not found",
+          });
+        }
+
+        await db.deletePlatformAccount(accountId);
+
+        // Reload sources
+        await chatService.loadUserSources(userId);
+
+        res.json({ success: true });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          error: (error as Error).message,
+        });
+      }
+    },
+  );
 
   // =============================================================================
   // MOBILE/API ROUTES (JWT-based)
