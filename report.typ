@@ -13,7 +13,7 @@
     fill: none,
   )),
 )
-#set text(font: "", size: 14pt)
+#set text(font: "Times New Roman", size: 12pt)
 #set heading(numbering: "1.")
 #set par(justify: true, leading: 0.65em, first-line-indent: 0.5in)
 
@@ -37,19 +37,19 @@
 
 // Title Page
 #align(center)[
-  #text(size: 16pt, weight: "bold")[
+  #text(size: 14pt, weight: "bold")[
     An Internship Course Report on
   ]
 
   #v(0.5cm)
 
-  #text(size: 18pt, weight: "bold")[
+  #text(size: 16pt, weight: "bold")[
     MERN DEVELOPMENT INTERNSHIP
   ]
 
   #v(0.5cm)
 
-  #text(size: 14pt, weight: "bold")[
+  #text(size: 12pt, weight: "bold")[
     Department of Computer Science and Engineering
   ]
 
@@ -59,20 +59,20 @@
 
   #v(1cm)
 
-  #text(size: 14pt, weight: "bold")[
+  #text(size: 12pt, weight: "bold")[
     Anil Neerukonda Institute of Technology and Sciences
   ]
   #v(0.1cm)
-  #text(size: 12pt)[(Affiliated to Andhra University)]
-  #text(size: 12pt)[Sangivalasa, Visakhapatnam-531162]
+  #text(size: 10pt)[(Affiliated to Andhra University)]
+  #text(size: 10pt)[Sangivalasa, Visakhapatnam-531162]
 
   #v(0.5cm)
 
-  #text(size: 12pt, weight: "bold")[Submitted by]
+  #text(size: 10pt, weight: "bold")[Submitted by]
 
   #v(0.5cm)
 
-  #text(size: 16pt, weight: "bold")[D. Sai Venkata Chaitanya - A22126510144]
+  #text(size: 14pt, weight: "bold")[D. Sai Venkata Chaitanya - A22126510144]
 
   #v(2cm)
 
@@ -80,35 +80,35 @@
     columns: (1fr, 1fr),
     gutter: 1cm,
     [
-      #text(size: 12pt)[Internship Reviewer]
+      #text(size: 10pt)[Internship Reviewer]
       #linebreak()
-      #text(size: 12pt)[Dr. S. Anusha]
+      #text(size: 10pt)[Dr. S. Anusha]
       #linebreak()
-      #text(size: 12pt)[M.Tech]
+      #text(size: 10pt)[M.Tech]
       #linebreak()
-      #text(size: 12pt)[(Asst. Professor)]
+      #text(size: 10pt)[(Asst. Professor)]
     ],
     [
-      #text(size: 12pt)[Summer Internship Coordinator]
+      #text(size: 10pt)[Summer Internship Coordinator]
       #linebreak()
-      #text(size: 12pt)[Mrs. G. Gowripushpa]
+      #text(size: 10pt)[Mrs. G. Gowripushpa]
       #linebreak()
-      #text(size: 12pt)[M.Tech, Ph.D]
+      #text(size: 10pt)[M.Tech, Ph.D]
       #linebreak()
-      #text(size: 12pt)[(Assistant professor)]
+      #text(size: 10pt)[(Assistant professor)]
     ],
   )
 
   #v(1cm)
 
   #pagebreak()
-  #text(size: 14pt, weight: "bold")[
+  #text(size: 12pt, weight: "bold")[
     ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY AND SCIENCES
   ]
   #linebreak()
-  #text(size: 13pt)[SANGIVALASA, VISAKHAPATNAM – 531162]
+  #text(size: 10pt)[SANGIVALASA, VISAKHAPATNAM – 531162]
   #linebreak()
-  #text(size: 13pt)[2022-2026]
+  #text(size: 10pt)[2022-2026]
 ]
 
 // Bonafide Certificate Page
@@ -117,7 +117,7 @@
 
   #v(1cm)
 
-  #text(size: 16pt, weight: "bold")[BONAFIDE CERTIFICATE]
+  #text(size: 14pt, weight: "bold")[BONAFIDE CERTIFICATE]
 ]
 
 #v(1cm)
@@ -133,20 +133,20 @@ assessment have been incorporated to account.
 #v(2cm)
 
 #align(right)[
-  #text(size: 12pt, weight: "bold")[Dr. G. Srinivas]
+  #text(size: 10pt, weight: "bold")[Dr. G. Srinivas]
   #linebreak()
-  #text(size: 12pt, weight: "bold")[(Head of the Department)]
+  #text(size: 10pt, weight: "bold")[(Head of the Department)]
   #linebreak()
-  #text(size: 12pt, weight: "bold")[Computer Science and Engineering]
+  #text(size: 10pt, weight: "bold")[Computer Science and Engineering]
   #linebreak()
-  #text(size: 12pt, weight: "bold")[ANITS]
+  #text(size: 10pt, weight: "bold")[ANITS]
 ]
 
 #pagebreak()
 
 // Course Completion Certificate Page
 #align(center)[
-  #text(size: 16pt, weight: "bold")[COURSE COMPLETION CERTIFICATE]
+  #text(size: 14pt, weight: "bold")[COURSE COMPLETION CERTIFICATE]
 
   #v(1cm)
 
@@ -159,7 +159,7 @@ assessment have been incorporated to account.
 
 // Declaration Page
 #align(center)[
-  #text(size: 16pt, weight: "bold")[DECLARATION]
+  #text(size: 14pt, weight: "bold")[DECLARATION]
 ]
 
 #v(1cm)
@@ -192,7 +192,7 @@ the requirements of the training.
 
 // Acknowledgment Page
 #align(center)[
-  #text(size: 16pt, weight: "bold")[ACKNOWLEDGMENT]
+  #text(size: 14pt, weight: "bold")[ACKNOWLEDGMENT]
 ]
 
 #v(1cm)
@@ -227,7 +227,7 @@ required.
 
 // Table of Contents
 #align(center)[
-  #text(size: 16pt, weight: "bold")[TABLE OF CONTENTS]
+  #text(size: 14pt, weight: "bold")[TABLE OF CONTENTS]
 ]
 
 #v(1cm)
@@ -1584,6 +1584,15 @@ revoked_tokens (jti, revoked_at, expires_at)
 
 The platform demonstrates production-ready practices including proper error handling, input validation, and secure authentication mechanisms.
 
+== Gallery
+
+#image("e_commerce/gallery/250820_14h27m01s_screenshot.png")
+#image("e_commerce/gallery/250820_14h28m00s_screenshot.png")
+#image("e_commerce/gallery/250820_14h28m34s_screenshot.png")
+#image("e_commerce/gallery/250820_14h32m16s_screenshot.png")
+#image("e_commerce/gallery/250820_14h32m39s_screenshot.png")
+#image("e_commerce/gallery/250820_14h32m56s_screenshot.png")
+
 #pagebreak()
 
 = Project 2: Mini Social Media Application
@@ -1760,6 +1769,16 @@ export class SocialMediaService {
 - Image optimization and lazy loading
 
 The application demonstrates production-ready social media features with scalable architecture and responsive design.
+
+== Gallery
+
+#image("mini_social_media/gallery/250820_14h50m09s_screenshot.png")
+#image("mini_social_media/gallery/250820_14h56m48s_screenshot.png")
+#image("mini_social_media/gallery/250820_14h57m38s_screenshot.png")
+#image("mini_social_media/gallery/250820_14h59m02s_screenshot.png")
+#image("mini_social_media/gallery/250820_14h59m20s_screenshot.png")
+
+// #image("")
 
 #pagebreak()
 
@@ -2037,6 +2056,13 @@ messages (
 
 The Chat Aggregator demonstrates enterprise-level data processing capabilities with robust error handling, scalable architecture, and comprehensive platform integration.
 
+== Gallery
+
+#image("chat_aggregator/gallery/250820_15h10m50s_screenshot.png")
+#image("chat_aggregator/gallery/250820_15h20m59s_screenshot.png")
+#image("chat_aggregator/gallery/250820_15h21m36s_screenshot.png")
+#image("chat_aggregator/gallery/250820_15h21m58s_screenshot.png")
+
 #pagebreak()
 
 = Deployment and Production Setup
@@ -2119,23 +2145,16 @@ applications.
 
 == References and Resources
 
-// Automatic reference table
-#let references_data = (
-  ("1", "https://react.dev/learn", "React Documentation"),
-  ("2", "https://nodejs.org/docs/latest/api/", "Node.js API Documentation"),
-  ("3", "https://www.mongodb.com/docs/", "MongoDB Documentation"),
-  ("4", "https://www.w3schools.com/", "W3Schools Web Development Tutorials"),
-  ("5", "https://expressjs.com/en/5x/api.html", "Express.js API Documentation"),
-  ("6", "https://www.typescriptlang.org/docs/", "TypeScript Documentation"),
-  ("7", "https://playwright.dev/docs/intro", "Playwright Documentation"),
-  ("8", "https://deno.land/manual/getting_started/installation", "Deno Installation Guide"),
-  ("9", "https://www.zod.dev/", "Zod Schema Validation Library"),
-  ("10", "https://vercel.com/docs", "Vercel Documentation"),
-  ("11", "https://www.docker.com/", "Docker Documentation"),
-)
-
-#auto-table(
-  references_data,
-  headers: ("No.", "URL", "Description"),
-  caption: "References and Resources",
-)
+1. #link("https://github.com/Atan-D-RP4/internship-Projects")[GitHub Repository]
+2. #link("https://react.dev/learn")[React Documentation]
+3. #link("https://nodejs.org/docs/latest/api/")[Node.js API Documentation]
+4. #link("https://www.mongodb.com/docs/")[MongoDB Documentation]
+5. #link("https://www.w3schools.com/")[W3Schools Web Development Tutorials]
+6. #link("https://expressjs.com/en/5x/api.html")[Express.js API Documentation]
+7. #link("https://www.typescriptlang.org/docs/")[TypeScript Documentation]
+8. #link("https://playwright.dev/docs/intro")[Playwright Documentation]
+9. #link("https://deno.land/manual/getting_started/installation")[Deno Installation Guide]
+10. #link("https://www.zod.dev/")[Zod Schema Validation Library]
+11. #link("https://vercel.com/docs")[Vercel Documentation]
+12. #link("https://www.docker.com/")[Docker Documentation]
+13. #link("https://typst.org/docs/")[Typst Documentation]

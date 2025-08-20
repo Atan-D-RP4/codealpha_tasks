@@ -9,8 +9,9 @@ export function Card(
   },
 ) {
   return (
-    <div>
+    <div
       className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
+    >
       {children}
     </div>
   );
