@@ -8,7 +8,7 @@ import { SessionManager } from "./session.ts";
 import process from "node:process";
 
 // =============================================================================
-// ENHANCED AUTH SERVICE
+// AUTH SERVICE
 // =============================================================================
 export class AuthService {
   constructor(

@@ -15,6 +15,9 @@ export const RegisterSchema = z.object({
   email: z.email(),
 });
 
+export type LoginRequest = z.infer<typeof LoginSchema>;
+export type RegisterRequest = z.infer<typeof RegisterSchema>;
+
 export const CreatePostSchema = z.object({
   content: z.string().min(1).max(1000),
   image_url: z.optional(z.url()),
@@ -35,8 +38,6 @@ export const UpdateProfileSchema = z.object({
   display_name: z.string().min(1).max(100).optional(),
 });
 
-export type LoginRequest = z.infer<typeof LoginSchema>;
-export type RegisterRequest = z.infer<typeof RegisterSchema>;
 export type CreatePostRequest = z.infer<typeof CreatePostSchema>;
 export type UpdatePostRequest = z.infer<typeof UpdatePostSchema>;
 export type CreateCommentRequest = z.infer<typeof CreateCommentSchema>;
